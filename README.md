@@ -1,5 +1,7 @@
 # Businesses
 
+Author: [Dekode1859](https://github.com/Dekode1859).
+
 This standalone repository contains only the Businesses phone app mod.
 The desktop manager is maintained separately at
 [schedule-one-mods/schedule-one-manager](https://github.com/schedule-one-mods/schedule-one-manager).

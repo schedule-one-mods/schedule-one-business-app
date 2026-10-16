@@ -1,5 +1,7 @@
 # Businesses
 
+Author: [Dekode1859](https://github.com/Dekode1859).
+
 Check your laundering businesses from your phone, using the game's own business
 computer screen. View every active deposit, its amount and time remaining, and
 cycle between business timelines with **Next**. **Back** and the phone's physical

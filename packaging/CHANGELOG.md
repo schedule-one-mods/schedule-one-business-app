@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.1.4
+- Use the author's GitHub username, Dekode1859, in loader metadata and package documentation. Gameplay and compatibility are unchanged.
+
 ## 0.1.3
 - Fix physical phone Home clicks by processing them before the game clears its
   per-frame input list. Confirmed working in the local playtest.
