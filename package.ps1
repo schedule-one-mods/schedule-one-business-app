@@ -1,6 +1,6 @@
-param([string]$GameDir = 'Q:\Games\Schedule I')
+param([string]$GameDir = 'Q:\Games\Schedule I', [string]$Dotnet, [string]$OutputDirectory = (Join-Path $PSScriptRoot 'artifacts/releases'))
 $ErrorActionPreference = 'Stop'
-& (Join-Path $PSScriptRoot 'build.ps1') -GameDir $GameDir
+& (Join-Path $PSScriptRoot 'build.ps1') -GameDir $GameDir -Dotnet $Dotnet
 $dll = Join-Path $PSScriptRoot 'artifacts\LaunderingStatus\LaunderingStatus.dll'
 Add-Type -Path (Join-Path $GameDir 'MelonLoader\net6\Mono.Cecil.dll')
 $definition = [Mono.Cecil.AssemblyDefinition]::ReadAssembly($dll)
@@ -10,7 +10,7 @@ try {
     $modName = [string]$modInfo.ConstructorArguments[1].Value
     $version = [string]$modInfo.ConstructorArguments[2].Value
 } finally { $definition.Dispose() }
-if ($modName -ne 'Businesses' -or $version -notmatch '^\d+\.\d+\.\d+$') {
+if ($modName -ne 'Businesses' -or $version -ne ([xml](Get-Content (Join-Path $PSScriptRoot 'Directory.Build.props') -Raw)).Project.PropertyGroup.Version -or $version -notmatch '^\d+\.\d+\.\d+$') {
     throw "Unexpected package identity: $modName $version"
 }
 $packageSource = Join-Path $PSScriptRoot 'packaging'
@@ -57,10 +57,11 @@ try {
 } finally {
     $graphics.Dispose(); $bitmap.Dispose(); $dark.Dispose(); $light.Dispose(); $teal.Dispose()
 }
-$releaseDir = Join-Path $PSScriptRoot 'artifacts\releases'
+$releaseDir = $OutputDirectory
 New-Item -ItemType Directory -Path $releaseDir -Force | Out-Null
 $zip = Join-Path $releaseDir ("Businesses-$version-IL2CPP.zip")
-Compress-Archive -Path (Join-Path $stage '*') -DestinationPath $zip -Force
+if (Test-Path -LiteralPath $zip) { throw 'Package already exists. Use a fresh OutputDirectory or a new version; published packages are immutable.' }
+Compress-Archive -Path (Join-Path $stage '*') -DestinationPath $zip
 $hash = (Get-FileHash -LiteralPath $zip -Algorithm SHA256).Hash.ToLowerInvariant()
 "$hash  $([System.IO.Path]::GetFileName($zip))" | Set-Content -LiteralPath ($zip + '.sha256') -Encoding ascii
 Write-Host "Package: $zip"

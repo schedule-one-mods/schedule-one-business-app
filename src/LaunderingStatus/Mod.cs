@@ -8,7 +8,7 @@ using Il2CppScheduleOne.UI.Phone;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-[assembly: MelonInfo(typeof(LaunderingStatus.Mod), "Businesses", "0.1.4", "Dekode1859")]
+[assembly: MelonInfo(typeof(LaunderingStatus.Mod), "Businesses", ScheduleOneMods.ModVersion.Value, "Dekode1859")]
 [assembly: MelonGame("TVGS", "Schedule I")]
 [assembly: MelonPlatformDomain(MelonPlatformDomainAttribute.CompatibleDomains.IL2CPP)]
 

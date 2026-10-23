@@ -12,14 +12,21 @@ identifier.
    Source: https://github.com/schedule-one-mods/schedule-one-business-app.
    The community registry is maintained independently at
    https://github.com/schedule-one-mods/schedule-one-mod-registry.
-2. Bump the version in Mod.cs when the distributed code changes. Use patch
+2. Bump the version only in Directory.Build.props when code changes. MelonInfo and the assembly version are generated automatically. Use patch
    increments for fixes, minor increments for features and a major increment
    for a deliberately incompatible release.
 3. Update packaging/CHANGELOG.md and packaging/compatibility.json with actual
    test results. Mod version and compatible game versions are separate data.
 4. Run the release tests below, then run package.ps1. The local package checks
    do not substitute for a clean mod-manager installation test.
-5. On Thunderstore, select your publishing team, Schedule I, and IL2CPP as the
+5. For Mod Manager discovery, commit `packaging/compatibility.json` before tagging
+   `v<major.minor.patch>`. Publish a GitHub Release with
+   `Businesses-<version>-IL2CPP.zip` and mark the intended stable release Latest.
+   The v2 registry already registers this repository: subsequent releases need
+   no registry PR or discovery Actions job. The manager reads compatibility from
+   the tag and verifies it against the package using GitHub's asset digest.
+   Never move a published tag or replace its ZIP; publish a new version.
+6. On Thunderstore, select your publishing team, Schedule I, and IL2CPP as the
    backend category. Upload the ZIP. Update the same package name under the same
    team with a higher version for subsequent releases.
 
@@ -65,3 +72,7 @@ References:
 - https://wiki.thunderstore.io/mods/updating-a-package
 - https://thunderstore.io/c/schedule-i/p/LavaGang/MelonLoader/versions/
 - https://partner.steamgames.com/doc/features/workshop
+
+## Automated publishing
+
+Use [PUBLISHING.md](PUBLISHING.md) for the bundled local publisher and optional version-aware post-commit hook. The publisher uses the existing Git credential helper, validates exact package contents, preserves published versions and never deploys or launches the game.

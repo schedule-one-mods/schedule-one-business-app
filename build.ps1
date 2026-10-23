@@ -1,11 +1,13 @@
 param(
     [string]$GameDir = 'Q:\Games\Schedule I',
-    [switch]$Deploy
+    [switch]$Deploy,
+    [string]$Dotnet
 )
 $ErrorActionPreference = 'Stop'
 $projectRoot = $PSScriptRoot
 $sdk = Join-Path $projectRoot 'tools\dotnet\dotnet.exe'
 if (!(Test-Path -LiteralPath $sdk)) { $sdk = 'dotnet' }
+if ($Dotnet) { $sdk = $Dotnet }
 $env:DOTNET_CLI_TELEMETRY_OPTOUT = '1'
 Push-Location (Join-Path $projectRoot 'src\LaunderingStatus')
 try {

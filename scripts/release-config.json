@@ -1,0 +1,15 @@
+{
+  "repository": "schedule-one-mods/schedule-one-business-app",
+  "displayName": "Businesses",
+  "packageName": "Businesses",
+  "changelog": "packaging/CHANGELOG.md",
+  "files": [
+    "manifest.json",
+    "compatibility.json",
+    "README.md",
+    "CHANGELOG.md",
+    "THIRD-PARTY-NOTICES.md",
+    "icon.png",
+    "Mods/LaunderingStatus.dll"
+  ]
+}

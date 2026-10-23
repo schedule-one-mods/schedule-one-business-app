@@ -99,3 +99,7 @@ Known-good 0.1.3 release files are available locally under `artifacts/releases`.
 To remove just this app, close the game and remove `Mods/LaunderingStatus.dll`.
 To disable MelonLoader as well, rename its added `version.dll` to
 `version.dll.disabled`. No original game DLL was replaced by this setup.
+
+## Automated local releases
+
+Edit the version once in `Directory.Build.props`, update the changelog, then use `publish.ps1` to build, push and publish. An optional post-commit hook publishes version increases on `main`. See [PUBLISHING.md](PUBLISHING.md).
